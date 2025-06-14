@@ -70,7 +70,7 @@ app.post('/api/send-email', async (req, res) => {
 // --- SERVIR FRONTEND ---
 
 // Servir archivos estáticos del frontend
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, '/frontend')));
 
 // Manejo de rutas del frontend (para SPA y recarga de página)
 // Esta ruta debe ir DESPUÉS de las rutas API y de express.static
@@ -78,7 +78,7 @@ app.get('*', (req, res) => {
     // Si la ruta no comienza con /api, se asume que es una ruta del frontend
     if (!req.originalUrl.startsWith('/api/')) {
         console.log(`🏠 Sirviendo index.html para la ruta: ${req.originalUrl}`);
-        res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
+        res.sendFile(path.join(__dirname, '/frontend', 'index.html'));
     } else {
         // Si es una ruta API no encontrada, devuelve 404
         console.log('❌ Endpoint API no encontrado:', req.originalUrl);

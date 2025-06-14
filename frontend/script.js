@@ -1,4 +1,4 @@
-const PRODUCTION_URL = 'https://alertas-maps.railway.app'; // Asegúrate que esta sea tu URL de producción final
+const PRODUCTION_URL = 'https://alertas-maps.vercel.app'; // Asegúrate que esta sea tu URL de producción final
 
 let BACKEND_URL;
 
