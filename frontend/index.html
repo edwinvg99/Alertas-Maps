@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulación en Ruta con Notificaciones</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-content">
+            <button id="toggleSidebar" class="sidebar-toggle">
+                <span class="btn-icon">⚙️</span>
+            </button>
+            
+            <div class="header-text">
+                <h1>Simulación de Ruta con Alertas</h1>
+            </div>
+            
+            <div class="header-spacer"></div>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h2>⚙️ Configuración</h2>
+                <button id="closeSidebar" class="close-btn">✕</button>
+            </div>
+
+            <div class="sidebar-content">
+                <div class="config-section">
+                    <h3><i class="icon">📧</i> Configuración de Notificaciones</h3>
+                    <div class="config-group">
+                        <label for="emailInput">Correo de destino</label>
+                        <input type="email" id="emailInput" placeholder="tu.email@ejemplo.com" value="">
+                    </div>
+                    <div class="config-group">
+                        <label for="phoneInput">Teléfono WhatsApp</label>
+                        <input type="tel" id="phoneInput" placeholder="573012345678" value="">
+                    </div>
+                    <div class="config-group">
+                        <label for="travelModeSelect">Modo de viaje</label>
+                        <select id="travelModeSelect">
+                            <option value="DRIVING">🚗 Conduciendo</option>
+                            <option value="WALKING">🚶 Caminando</option>
+                            <option value="BICYCLING">🚴 Bicicleta</option>
+                            <option value="TRANSIT">🚌 Transporte público</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="config-section">
+                    <h3><i class="icon">📍</i> Configuración de Ruta</h3>
+                    <div class="config-group">
+                        <label for="originInput">Punto de origen</label>
+                        <input type="text" id="originInput" placeholder="Ej: Universidad de Medellín">
+                    </div>
+                    <div class="config-group">
+                        <label for="destinationInput">Punto de destino</label>
+                        <input type="text" id="destinationInput" placeholder="Ej: Parque Lleras, El Poblado">
+                    </div>
+                    
+                    <div class="map-controls">
+                        <button id="toggleMapMode" class="btn-secondary btn-full">
+                            <span class="btn-icon">🗺️</span>
+                            Activar modo selección
+                        </button>
+                        <button id="clearCheckpoints" class="btn-danger btn-full">
+                            <span class="btn-icon">🗑️</span>
+                            Limpiar alertas
+                        </button>
+                    </div>
+                </div>
+
+                <div id="mapModeInfo" class="map-mode-info" style="display: none;">
+                    <div class="mode-header">
+                        <h4>🎯 Modo selección activo</h4>
+                        <p>Haz clic en el mapa para establecer puntos</p>
+                    </div>
+                    <div class="mode-buttons">
+                        <button id="setOriginMode" class="mode-btn btn-full">
+                            <span class="btn-icon">🟢</span>
+                            Establecer Origen
+                        </button>
+                        <button id="setDestinationMode" class="mode-btn btn-full">
+                            <span class="btn-icon">🔴</span>
+                            Establecer Destino
+                        </button>
+                        <button id="addCheckpointMode" class="mode-btn btn-full">
+                            <span class="btn-icon">⚠️</span>
+                            Agregar Punto de Alerta
+                        </button>
+                    </div>
+                </div>
+
+                <div id="routeInfo" class="route-info" style="display: none;">
+                    <div class="route-details">
+                        <h4>📊 Información de la Ruta</h4>
+                        <div class="route-stats">
+                            <div class="stat-item">
+                                <span id="routeDistance">Distancia: --</span>
+                            </div>
+                            <div class="stat-item">
+                                <span id="routeDuration">Duración: --</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="control-buttons-sidebar">
+                    <button id="startButton" class="btn-control btn-start">
+                        <div class="btn-content">
+                            <span class="btn-icon">▶️</span>
+                            <span class="btn-text">Iniciar Simulación</span>
+                        </div>
+                    </button>
+                    <button id="stopButton" class="btn-control btn-stop">
+                        <div class="btn-content">
+                            <span class="btn-icon">⏹️</span>
+                            <span class="btn-text">Detener Simulación</span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <main class="map-area">
+            <div class="map-container">
+                <div id="map"></div>
+            </div>
+        </main>
+    </div>
+    
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+    
+    <div id="specialNotification" class="special-notification"></div>
+    <div id="notification" class="notification"></div>
+    
+    <footer class="control-footer mobile-only">
+        <div class="control-buttons">
+            <button id="startButtonMobile" class="btn-control btn-start">
+                <div class="btn-content">
+                    <span class="btn-icon">▶️</span>
+                    <span class="btn-text">Iniciar Simulación</span>
+                </div>
+            </button>
+            <button id="stopButtonMobile" class="btn-control btn-stop">
+                <div class="btn-content">
+                    <span class="btn-icon">⏹️</span>
+                    <span class="btn-text">Detener Simulación</span>
+                </div>
+            </button>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
