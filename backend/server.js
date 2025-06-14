@@ -1,22 +1,17 @@
 // Importar los módulos necesarios
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
-const emailjs = require('@emailjs/nodejs'); // SDK oficial para Node.js
-
-// Cargar las variables de entorno desde el archivo .env
-dotenv.config();
+const path = require('path');
+require('dotenv').config();
 
 // Crear la aplicación de Express
 const app = express();
-const PORT = process.env.PORT || 3001;
 
 // Middlewares
 app.use(cors()); // Habilita CORS para permitir peticiones desde tu frontend
 app.use(express.json()); // Permite al servidor entender JSON
 
 // Servir archivos estáticos del frontend
-const path = require('path');
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 // --- ENDPOINTS DE LA API ---
@@ -62,12 +57,13 @@ app.post('/api/send-email', async (req, res) => {
     }
 });
 
-// Ruta para servir el frontend
-app.get('/', (req, res) => {
+// Servir el frontend para cualquier ruta no API
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend', 'index.html'));
 });
 
 // Iniciar el servidor
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
