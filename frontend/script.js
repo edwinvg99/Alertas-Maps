@@ -1,7 +1,20 @@
+const PRODUCTION_URL = 'https://alertas-maps.railway.app'; // Asegúrate que esta sea tu URL de producción final
 
-const BACKEND_URL = window.location.hostname === 'localhost' 
-    ? 'http://localhost:3001'
-    : 'https://alertas-maps.up.railway.app/';
+let BACKEND_URL;
+
+const IS_LOCALHOST = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+if (IS_LOCALHOST) {
+    // En desarrollo, el backend siempre corre en el puerto 3001
+    BACKEND_URL = 'http://localhost:3001';
+} else {
+    // En producción, el frontend y el backend se sirven desde el mismo origen
+    BACKEND_URL = window.location.origin;
+}
+
+console.log('🔧 BACKEND_URL configurado:', BACKEND_URL);
+console.log('🌐 Hostname actual:', window.location.hostname);
+console.log('🔌 Puerto actual:', window.location.port);
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
