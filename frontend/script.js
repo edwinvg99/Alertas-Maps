@@ -1,5 +1,7 @@
 
-const BACKEND_URL = 'https://alertas-maps.vercel.app/'; 
+const BACKEND_URL = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3001'
+    : 'https://alertas-maps.up.railway.app/';
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeApp();
